@@ -1,156 +1,178 @@
 [
-{
-"id": 1,
-"nombre": "Yogur natural desnatado (125g)",
-"es_saludable": true,
-"calorias": 45,
-"explicacion": "Bajo en calorías y grasas, aporta proteínas de alto valor biológico y calcio. Ideal para saciar el hambre en el desayuno sin aportar azúcares añadidos."
-},
-{
-"id": 2,
-"nombre": "Bollería industrial / Croissant (50g)",
-"es_saludable": false,
-"calorias": 210,
-"explicacion": "Rico en azúcares refinados y grasas saturadas o trans. Posee una alta densidad calórica y un bajo poder saciante a medio plazo."
-},
-{
-"id": 3,
-"nombre": "Pan integral (30g)",
-"es_saludable": true,
-"calorias": 70,
-"explicacion": "Aporta hidratos de carbono complejos y fibra, lo que ayuda a mantener estables los niveles de glucosa en sangre y prolonga la sensación de saciedad."
-},
-{
-"id": 4,
-"nombre": "Refresco azucarado (330ml / 1 lata)",
-"es_saludable": false,
-"calorias": 140,
-"explicacion": "Aporta calorías vacías provenientes de azúcares simples sin ningún tipo de nutriente, lo que dificulta el déficit calórico e incrementa la insulina rápidamente."
-},
-{
-"id": 5,
-"nombre": "Pera Conferencia (150g)",
-"es_saludable": true,
-"calorias": 85,
-"explicacion": "Rica en agua, potasio y fibra soluble (pectina). Es perfecta como aperitivo o almuerzo ligero para controlar la ansiedad entre comidas."
-},
-{
-"id": 6,
-"nombre": "Patatas fritas de bolsa (50g)",
-"es_saludable": false,
-"calorias": 265,
-"explicacion": "Elevado contenido en grasas fritas y sodio. Muy denso en calorías en porciones pequeñas, promueve la retención de líquidos y el sobreconsumo."
-},
-{
-"id": 7,
-"nombre": "Pechuga de pollo a la plancha (100g)",
-"es_saludable": true,
-"calorias": 120,
-"explicacion": "Fuente de proteína magra de alta calidad con muy bajo contenido graso. Favorece el mantenimiento de la masa muscular durante el déficit calórico."
-},
-{
-"id": 8,
-"nombre": "Pizza prefabricada (1 porción / 150g)",
-"es_saludable": false,
-"calorias": 400,
-"explicacion": "Alta concentración de harina refinada, quesos grasos y embutidos procesados. Supera con frecuencia la cantidad de grasa y sodio recomendada por comida."
-},
-{
-"id": 9,
-"nombre": "Brócoli al vapor (150g)",
-"es_saludable": true,
-"calorias": 50,
-"explicacion": "Muy bajo en calorías y rico en fibra, vitamina C y antioxidantes. Ocupa gran volumen en el estómago generando saciedad con muy pocas calorías."
-},
-{
-"id": 10,
-"nombre": "Chocolate con leche / Chocolatina (50g)",
-"es_saludable": false,
-"calorias": 270,
-"explicacion": "Contiene un alto porcentaje de azúcar refinado y manteca de cacao. Eleva considerablemente las calorías diarias en una porción reducida."
-},
-{
-"id": 11,
-"nombre": "Mandarina (100g)",
-"es_saludable": true,
-"calorias": 45,
-"explicacion": "Opción ligera para la merienda. Aporta vitamina C, hidratación y fibra natural en una porción baja en calorías."
-},
-{
-"id": 12,
-"nombre": "Hamburguesa de comida rápida (150g)",
-"es_saludable": false,
-"calorias": 380,
-"explicacion": "Alta en grasas saturadas, salsas e hidratos simples (pan blanco). Dificulta el control calórico y aporta un exceso de sodio."
-},
-{
-"id": 13,
-"nombre": "Tortilla francesa de 2 huevos con espinacas (150g)",
-"es_saludable": true,
-"calorias": 180,
-"explicacion": "Buena combinación de proteínas de alta calidad, grasas saludables del huevo y micronutrientes/fibra de las espinacas."
-},
-{
-"id": 14,
-"nombre": "Salchichas procesadas / Embutido graso (100g)",
-"es_saludable": false,
-"calorias": 300,
-"explicacion": "Contienen grasas saturadas de baja calidad, aditivos químicos y un exceso de sal, incrementando la densidad calórica innecesariamente."
-},
-{
-"id": 15,
-"nombre": "Piña natural (120g)",
-"es_saludable": true,
-"calorias": 60,
-"explicacion": "Fruta refrescante y diurética con un alto contenido de agua y bromelina, favoreciendo la digestión."
-},
-{
-"id": 16,
-"nombre": "Bebida alcohólica / Cerveza (330ml)",
-"es_saludable": false,
-"calorias": 150,
-"explicacion": "El alcohol aporta 7 kcal por gramo sin valor nutricional, frena el metabolismo de las grasas y estimula el apetito."
-},
-{
-"id": 17,
-"nombre": "Bacalao al horno (120g)",
-"es_saludable": true,
-"calorias": 100,
-"explicacion": "Pescado blanco magro, muy bajo en grasa y alto en proteínas, ideal para cenas o comidas ligeras."
-},
-{
-"id": 18,
-"nombre": "Helado de crema (100g)",
-"es_saludable": false,
-"calorias": 220,
-"explicacion": "Rico en azúcares libres y nata o leche entera grasa. Alto valor calórico y baja capacidad saciante."
-},
-{
-"id": 19,
-"nombre": "Crema de calabacín sin patata (200ml)",
-"es_saludable": true,
-"calorias": 60,
-"explicacion": "Plato rico en fibra y agua, reconfortante y de muy baja densidad calórica al evitar la patata y la nata."
-},
-{
-"id": 20,
-"nombre": "Salsas comerciales / Mayonesa (30g)",
-"es_saludable": false,
-"calorias": 200,
-"explicacion": "Compuestas en su mayoría por aceites refinados. Añaden una gran cantidad de calorías extra a platos sin sumar volumen ni saciedad."
-},
-{
-"id": 21,
-"nombre": "Nueces peladas (15g)",
-"es_saludable": true,
-"calorias": 100,
-"explicacion": "Aunque son calóricas, en porciones controladas (15g) aportan ácidos grasos esenciales Omega-3, antioxidantes y gran poder de saciedad."
-},
-{
-"id": 22,
-"nombre": "Zumos industriales o envasados (250ml)",
-"es_saludable": false,
-"calorias": 115,
-"explicacion": "Al eliminar la fibra de la fruta, la absorción del azúcar es rápida (azúcar libre), no sacia igual que la fruta entera y suma calorías fácilmente."
-}
+  {
+    "id": 1,
+    "nombre": "Yogur natural desnatado (125g)",
+    "icono": "🥛",
+    "es_bueno": true,
+    "calorias": "~45 kcal",
+    "motivo": "Bajo en calorías y grasas, aporta proteínas de alto valor biológico y calcio. Ideal para saciar el hambre en el desayuno sin aportar azúcares añadidos."
+  },
+  {
+    "id": 2,
+    "nombre": "Bollería industrial / Croissant (50g)",
+    "icono": "🥐",
+    "es_bueno": false,
+    "calorias": "~210 kcal",
+    "motivo": "Rico en azúcares refinados y grasas saturadas o trans. Posee una alta densidad calórica y un bajo poder saciante a medio plazo."
+  },
+  {
+    "id": 3,
+    "nombre": "Pan integral (30g)",
+    "icono": "🍞",
+    "es_bueno": true,
+    "calorias": "~70 kcal",
+    "motivo": "Aporta hidratos de carbono complejos y fibra, lo que ayuda a mantener estables los niveles de glucosa en sangre y prolonga la sensación de saciedad."
+  },
+  {
+    "id": 4,
+    "nombre": "Refresco azucarado (330ml / 1 lata)",
+    "icono": "🥤",
+    "es_bueno": false,
+    "calorias": "~140 kcal",
+    "motivo": "Aporta calorías vacías provenientes de azúcares simples sin ningún tipo de nutriente, lo que dificulta el déficit calórico e incrementa la insulina rápidamente."
+  },
+  {
+    "id": 5,
+    "nombre": "Pera Conferencia (150g)",
+    "icono": "🍐",
+    "es_bueno": true,
+    "calorias": "~85 kcal",
+    "motivo": "Rica en agua, potasio y fibra soluble (pectina). Es perfecta como aperitivo o almuerzo ligero para controlar la ansiedad entre comidas."
+  },
+  {
+    "id": 6,
+    "nombre": "Patatas fritas de bolsa (50g)",
+    "icono": "🍟",
+    "es_bueno": false,
+    "calorias": "~265 kcal",
+    "motivo": "Elevado contenido en grasas fritas y sodio. Muy denso en calorías en porciones pequeñas, promueve la retención de líquidos y el sobreconsumo."
+  },
+  {
+    "id": 7,
+    "nombre": "Pechuga de pollo a la plancha (100g)",
+    "icono": "🍗",
+    "es_bueno": true,
+    "calorias": "~120 kcal",
+    "motivo": "Fuente de proteína magra de alta calidad con muy bajo contenido graso. Favorece el mantenimiento de la masa muscular durante el déficit calórico."
+  },
+  {
+    "id": 8,
+    "nombre": "Pizza prefabricada (1 porción / 150g)",
+    "icono": "🍕",
+    "es_bueno": false,
+    "calorias": "~400 kcal",
+    "motivo": "Alta concentración de harina refinada, quesos grasos y embutidos procesados. Supera con frecuencia la cantidad de grasa y sodio recomendada por comida."
+  },
+  {
+    "id": 9,
+    "nombre": "Brócoli al vapor (150g)",
+    "icono": "🥦",
+    "es_bueno": true,
+    "calorias": "~50 kcal",
+    "motivo": "Muy bajo en calorías y rico en fibra, vitamina C y antioxidantes. Ocupa gran volumen en el estómago generando saciedad con muy pocas calorías."
+  },
+  {
+    "id": 10,
+    "nombre": "Chocolate con leche / Chocolatina (50g)",
+    "icono": "🍫",
+    "es_bueno": false,
+    "calorias": "~270 kcal",
+    "motivo": "Contiene un alto porcentaje de azúcar refinado y manteca de cacao. Eleva considerablemente las calorías diarias en una porción reducida."
+  },
+  {
+    "id": 11,
+    "nombre": "Mandarina (100g)",
+    "icono": "🍊",
+    "es_bueno": true,
+    "calorias": "~45 kcal",
+    "motivo": "Opción ligera para la merienda. Aporta vitamina C, hidratación y fibra natural en una porción baja en calorías."
+  },
+  {
+    "id": 12,
+    "nombre": "Hamburguesa de comida rápida (150g)",
+    "icono": "🍔",
+    "es_bueno": false,
+    "calorias": "~380 kcal",
+    "motivo": "Alta en grasas saturadas, salsas e hidratos simples (pan blanco). Dificulta el control calórico y aporta un exceso de sodio."
+  },
+  {
+    "id": 13,
+    "nombre": "Tortilla francesa de 2 huevos con espinacas (150g)",
+    "icono": "🍳",
+    "es_bueno": true,
+    "calorias": "~180 kcal",
+    "motivo": "Buena combinación de proteínas de alta calidad, grasas saludables del huevo y micronutrientes/fibra de las espinacas."
+  },
+  {
+    "id": 14,
+    "nombre": "Salchichas procesadas / Embutido graso (100g)",
+    "icono": "🌭",
+    "es_bueno": false,
+    "calorias": "~300 kcal",
+    "motivo": "Contienen grasas saturadas de baja calidad, aditivos químicos y un exceso de sal, incrementando la densidad calórica innecesariamente."
+  },
+  {
+    "id": 15,
+    "nombre": "Piña natural (120g)",
+    "icono": "🍍",
+    "es_bueno": true,
+    "calorias": "~60 kcal",
+    "motivo": "Fruta refrescante y diurética con un alto contenido de agua y bromelina, favoreciendo la digestión."
+  },
+  {
+    "id": 16,
+    "nombre": "Bebida alcohólica / Cerveza (330ml)",
+    "icono": "🍺",
+    "es_bueno": false,
+    "calorias": "~150 kcal",
+    "motivo": "El alcohol aporta 7 kcal por gramo sin valor nutricional, frena el metabolismo de las grasas y estimula el apetito."
+  },
+  {
+    "id": 17,
+    "nombre": "Bacalao al horno (120g)",
+    "icono": "🐟",
+    "es_bueno": true,
+    "calorias": "~100 kcal",
+    "motivo": "Pescado blanco magro, muy bajo en grasa y alto en proteínas, ideal para cenas o comidas ligeras."
+  },
+  {
+    "id": 18,
+    "nombre": "Helado de crema (100g)",
+    "icono": "🍨",
+    "es_bueno": false,
+    "calorias": "~220 kcal",
+    "motivo": "Rico en azúcares libres y nata o leche entera grasa. Alto valor calórico y baja capacidad saciante."
+  },
+  {
+    "id": 19,
+    "nombre": "Crema de calabacín sin patata (200ml)",
+    "icono": "🍲",
+    "es_bueno": true,
+    "calorias": "~60 kcal",
+    "motivo": "Plato rico en fibra y agua, reconfortante y de muy baja densidad calórica al evitar la patata y la nata."
+  },
+  {
+    "id": 20,
+    "nombre": "Salsas comerciales / Mayonesa (30g)",
+    "icono": "🥫",
+    "es_bueno": false,
+    "calorias": "~200 kcal",
+    "motivo": "Compuestas en su mayoría por aceites refinados. Añaden una gran cantidad de calorías extra a platos sin sumar volumen ni saciedad."
+  },
+  {
+    "id": 21,
+    "nombre": "Nueces peladas (15g)",
+    "icono": "🥜",
+    "es_bueno": true,
+    "calorias": "~100 kcal",
+    "motivo": "Aunque son calóricas, en porciones controladas (15g) aportan ácidos grasos esenciales Omega-3, antioxidantes y gran poder de saciedad."
+  },
+  {
+    "id": 22,
+    "nombre": "Zumos industriales o envasados (250ml)",
+    "icono": "🧃",
+    "es_bueno": false,
+    "calorias": "~115 kcal",
+    "motivo": "Al eliminar la fibra de la fruta, la absorción del azúcar es rápida (azúcar libre), no sacia igual que la fruta entera y suma calorías fácilmente."
+  }
 ]
