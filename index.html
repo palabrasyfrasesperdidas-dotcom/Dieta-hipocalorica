@@ -135,7 +135,7 @@
           <div class="text-3xl sm:text-4xl flex gap-3 opacity-80">
             <span>🍎</span>
             <span>💧</span>
-            <span>🚫</span>
+            <span>👍</span>
           </div>
           <span class="text-xs text-pink-400 mt-3 font-vt323 text-xl tracking-wider">HEALTHY FOOD RUN</span>
         </div>
@@ -170,9 +170,9 @@
 
         <div class="mt-4 pt-3 border-t border-purple-800 text-[9px] sm:text-[11px] text-pink-300">
           <p class="mb-1">🕹️ <b>INSTRUCCIONES DE JUEGO:</b></p>
-          <p>• Atrapa todos los alimentos del listado (buenos y malos).</p>
-          <p>• Conoce las calorías y motivos nutricionales de cada uno.</p>
-          <p>• ¡El juego continúa hasta que recojas toda la compra!</p>
+          <p>• Atrapa todos los alimentos del listado para revisarlos.</p>
+          <p>• Si se escapa alguno, volverá a caer hasta que lo atrapes.</p>
+          <p>• ¡Revisa las calorías y motivos de cada producto!</p>
         </div>
       </div>
 
@@ -187,7 +187,7 @@
     <!-- VISTA 3: TABLERO DE JUEGO ARCADE -->
     <section id="view-3" class="hidden h-full flex flex-col justify-between items-center relative">
       
-      <!-- Marcador Superior -->
+      <!-- Marcador Superior (Sin Vidas) -->
       <div class="w-full flex justify-between items-center bg-purple-950/90 px-3 py-2 border-2 border-cyan-400 rounded-md text-[10px] sm:text-xs">
         <div class="flex items-center gap-2">
           <span class="text-pink-400">PUNTOS:</span>
@@ -196,10 +196,6 @@
         <div class="flex items-center gap-2">
           <span class="text-cyan-400">RESTANTES:</span>
           <span id="remaining-display" class="text-cyan-300 text-sm">22</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-cyan-400">SALUD:</span>
-          <span id="lives-display" class="text-red-500 text-sm">❤️❤️❤️</span>
         </div>
       </div>
 
@@ -217,6 +213,43 @@
         <button id="btn-right" class="btn-control flex-1 py-3 rounded-lg text-white text-xl active:bg-cyan-600 cursor-pointer">
           <i class="fa-solid fa-arrow-right"></i>
         </button>
+      </div>
+    </section>
+
+    <!-- VISTA 4: PANTALLA FINAL DE VICTORIA (FUEGOS ARTIFICIALES) -->
+    <section id="view-win" class="hidden h-full flex flex-col justify-between items-center text-center relative overflow-hidden py-4">
+      <!-- Canvas de Fuegos Artificiales de Fondo -->
+      <canvas id="fireworksCanvas" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+      <div class="relative z-10 flex flex-col justify-between h-full w-full items-center">
+        <header class="mt-2">
+          <h2 class="text-lg sm:text-2xl neon-yellow tracking-wider animate-bounce">
+            ¡MISIÓN COMPLETADA!
+          </h2>
+        </header>
+
+        <!-- Bloque Central con Estética Retro y Dgar / OK -->
+        <div class="my-auto p-4 sm:p-6 bg-purple-950/90 border-4 border-pink-500 rounded-lg shadow-[0_0_30px_#ff007f] max-w-md w-full">
+          <div class="text-6xl sm:text-7xl mb-3 flex justify-center gap-3">
+            <span>👍</span>
+            <span>✨</span>
+          </div>
+          <h3 class="text-sm sm:text-base text-cyan-300 mb-2 uppercase tracking-wide">
+            ENHORABUENA
+          </h3>
+          <p class="text-xs sm:text-sm text-yellow-300 font-vt323 text-2xl sm:text-3xl leading-relaxed my-2">
+            "Vamos a preparar la dieta"
+          </p>
+          <div class="mt-3 text-[10px] text-gray-300 font-vt323 text-xl">
+            Puntuación Final: <span id="final-score" class="text-yellow-400">0</span> puntos
+          </div>
+        </div>
+
+        <footer class="w-full mb-2 z-10">
+          <button id="btn-restart" class="btn-arcade w-full max-w-xs py-4 px-6 rounded-lg text-sm sm:text-base cursor-pointer tracking-wider">
+            JUGAR DE NUEVO <i class="fa-solid fa-rotate-right ml-2"></i>
+          </button>
+        </footer>
       </div>
     </section>
 
@@ -279,10 +312,11 @@
 
     btnAudioToggle.addEventListener('click', toggleAudio);
 
-    // Navegación entre las 3 vistas
+    // Navegación entre vistas
     const view1 = document.getElementById('view-1');
     const view2 = document.getElementById('view-2');
     const view3 = document.getElementById('view-3');
+    const viewWin = document.getElementById('view-win');
 
     document.getElementById('btn-to-view2').addEventListener('click', () => {
       view1.classList.add('hidden');
@@ -296,12 +330,16 @@
       loadQuestionsAndStart();
     });
 
+    document.getElementById('btn-restart').addEventListener('click', () => {
+      viewWin.classList.add('hidden');
+      view1.classList.remove('hidden');
+    });
+
     // Carga de preguntas desde preguntas.json y Motor del Juego
     let foodDatabase = [];
     let remainingFoods = [];
     let canvas, ctx;
     let score = 0;
-    let lives = 3;
     let isPaused = false;
     let gameLoopId = null;
 
@@ -331,10 +369,9 @@
       window.addEventListener('resize', resizeCanvas);
 
       score = 0;
-      lives = 3;
       isPaused = false;
       fallingItems = [];
-      remainingFoods = [...foodDatabase]; // Clonamos la base de datos completa para ir tachando los cogidos
+      remainingFoods = [...foodDatabase]; 
       updateScoreboard();
 
       basket.x = canvas.width / 2 - basket.width / 2;
@@ -383,9 +420,8 @@
     }
 
     function spawnFood() {
-      if (!remainingFoods.length) return; // Si ya no quedan alimentos por atrapar, no generamos más
+      if (!remainingFoods.length) return; 
       
-      // Seleccionamos un alimento aleatorio de los que aún no se han cogido
       const randomIndex = Math.floor(Math.random() * remainingFoods.length);
       const foodToSpawn = remainingFoods[randomIndex];
 
@@ -393,7 +429,7 @@
         ...foodToSpawn,
         x: Math.random() * (canvas.width - 40) + 20,
         y: -30,
-        speed: 1.0 + Math.random() * 0.8, // Velocidad de caída reducida y suave
+        speed: 1.0 + Math.random() * 0.8,
         size: 32
       });
     }
@@ -406,7 +442,7 @@
       if (basket.x + basket.width > canvas.width) basket.x = canvas.width - basket.width;
 
       spawnTimer++;
-      if (spawnTimer > 90) { // Intervalo de aparición pausado
+      if (spawnTimer > 90) { 
         spawnFood();
         spawnTimer = 0;
       }
@@ -422,7 +458,7 @@
           item.x + item.size / 2 >= basket.x &&
           item.x - item.size / 2 <= basket.x + basket.width
         ) {
-          // Quitamos este alimento de la lista de pendientes para que no vuelva a caer
+          // Eliminamos de la lista pendiente al ser atrapado
           const indexInRemaining = remainingFoods.findIndex(f => f.nombre === item.nombre);
           if (indexInRemaining !== -1) {
             remainingFoods.splice(indexInRemaining, 1);
@@ -433,6 +469,8 @@
           continue;
         }
 
+        // Si el alimento llega abajo sin ser atrapado, se elimina del canvas 
+        // pero PERMANECE en remainingFoods para volver a caer más adelante
         if (item.y > canvas.height + 40) {
           fallingItems.splice(i, 1);
         }
@@ -492,7 +530,6 @@
         modalBadge.textContent = "✕ NO RECOMENDADO";
         modalBadge.className = "inline-block px-3 py-1 rounded text-[10px] sm:text-xs font-bold mb-3 border bg-red-950 text-red-400 border-red-500";
         score = Math.max(0, score - 50);
-        lives--;
       }
 
       updateScoreboard();
@@ -502,16 +539,13 @@
     function resumeGame() {
       modal.classList.add('hidden');
 
-      if (lives <= 0) {
-        alert(`¡TE HAS QUEDADO SIN SALUD!\nPuntuación final: ${score} puntos.`);
-        initGame();
-        return;
-      }
-
       // Verificamos si ya se han cogido todos los alimentos del listado
       if (remainingFoods.length === 0) {
-        alert(`¡ENHORABUENA!\nHas completado con éxito la compra de la Dieta Hipocalórica.\nPuntuación final: ${score} puntos.`);
-        location.reload(); // Reinicia la app a la portada
+        cancelAnimationFrame(gameLoopId);
+        view3.classList.add('hidden');
+        viewWin.classList.remove('hidden');
+        document.getElementById('final-score').textContent = score;
+        initFireworks();
         return;
       }
 
@@ -524,7 +558,67 @@
     function updateScoreboard() {
       document.getElementById('score-display').textContent = score;
       document.getElementById('remaining-display').textContent = remainingFoods.length;
-      document.getElementById('lives-display').textContent = '❤️'.repeat(Math.max(0, lives));
+    }
+
+    // Sistema de Fuegos Artificiales para la Pantalla de Victoria
+    let fireworksInterval = null;
+    function initFireworks() {
+      const fwCanvas = document.getElementById('fireworksCanvas');
+      const fwCtx = fwCanvas.getContext('2d');
+      fwCanvas.width = fwCanvas.clientWidth;
+      fwCanvas.height = fwCanvas.clientHeight;
+
+      let particles = [];
+
+      function createFirework(x, y) {
+        const colors = ['#ff007f', '#00f6ff', '#ffe600', '#00ff66', '#ff9900'];
+        const count = 35;
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 4 + 2;
+          particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            color: colors[Math.floor(Math.random() * colors.length)]
+          });
+        }
+      }
+
+      if (fireworksInterval) clearInterval(fireworksInterval);
+      fireworksInterval = setInterval(() => {
+        createFirework(Math.random() * fwCanvas.width, Math.random() * (fwCanvas.height / 2));
+      }, 700);
+
+      function animateFireworks() {
+        fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+        particles.forEach((p, index) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.05; // Gravedad
+          p.alpha -= 0.015;
+
+          if (p.alpha <= 0) {
+            particles.splice(index, 1);
+            return;
+          }
+
+          fwCtx.save();
+          fwCtx.globalAlpha = p.alpha;
+          fwCtx.fillStyle = p.color;
+          fwCtx.beginPath();
+          fwCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+          fwCtx.fill();
+          fwCtx.restore();
+        });
+
+        if (!viewWin.classList.contains('hidden')) {
+          requestAnimationFrame(animateFireworks);
+        }
+      }
+      animateFireworks();
     }
   </script>
 </body>
