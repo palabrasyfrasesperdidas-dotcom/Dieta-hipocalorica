@@ -106,7 +106,7 @@
   </audio>
 
   <!-- Botón Control de Sonido Global (Flotante) -->
-  <button id="btn-audio-toggle" class="fixed top-3 right-3 z-50 bg-purple-900 border-2 border-cyan-400 text-cyan-300 p-3 rounded-full shadow-[0_0_10px_#00f6ff] text-xs">
+  <button id="btn-audio-toggle" class="fixed top-3 right-3 z-50 bg-purple-900 border-2 border-cyan-400 text-cyan-300 p-3 rounded-full shadow-[0_0_10px_#00f6ff] text-xs cursor-pointer">
     <i id="audio-icon" class="fa-solid fa-volume-xmark"></i>
   </button>
 
@@ -170,9 +170,9 @@
 
         <div class="mt-4 pt-3 border-t border-purple-800 text-[9px] sm:text-[11px] text-pink-300">
           <p class="mb-1">🕹️ <b>INSTRUCCIONES DE JUEGO:</b></p>
-          <p>• Atrapa los alimentos saludables para sumar puntos.</p>
-          <p>• Los productos no recomendados restarán puntos y salud.</p>
-          <p>• Al atrapar cada producto conocerás sus calorías y propiedades.</p>
+          <p>• Atrapa todos los alimentos del listado (buenos y malos).</p>
+          <p>• Conoce las calorías y motivos nutricionales de cada uno.</p>
+          <p>• ¡El juego continúa hasta que recojas toda la compra!</p>
         </div>
       </div>
 
@@ -194,6 +194,10 @@
           <span id="score-display" class="text-yellow-300 text-sm">0</span>
         </div>
         <div class="flex items-center gap-2">
+          <span class="text-cyan-400">RESTANTES:</span>
+          <span id="remaining-display" class="text-cyan-300 text-sm">22</span>
+        </div>
+        <div class="flex items-center gap-2">
           <span class="text-cyan-400">SALUD:</span>
           <span id="lives-display" class="text-red-500 text-sm">❤️❤️❤️</span>
         </div>
@@ -206,11 +210,11 @@
 
       <!-- Controles Táctiles Integrados (Versión WAP / Móvil) -->
       <div id="wap-controls" class="w-full flex justify-between items-center gap-4 px-2 py-1">
-        <button id="btn-left" class="btn-control flex-1 py-3 rounded-lg text-white text-xl active:bg-cyan-600">
+        <button id="btn-left" class="btn-control flex-1 py-3 rounded-lg text-white text-xl active:bg-cyan-600 cursor-pointer">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <span class="text-[9px] text-gray-400 hidden sm:inline">TECLAS ← / →</span>
-        <button id="btn-right" class="btn-control flex-1 py-3 rounded-lg text-white text-xl active:bg-cyan-600">
+        <button id="btn-right" class="btn-control flex-1 py-3 rounded-lg text-white text-xl active:bg-cyan-600 cursor-pointer">
           <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -283,7 +287,7 @@
     document.getElementById('btn-to-view2').addEventListener('click', () => {
       view1.classList.add('hidden');
       view2.classList.remove('hidden');
-      if (isMuted) toggleAudio(); // Intenta iniciar música con la interacción
+      if (isMuted) toggleAudio();
     });
 
     document.getElementById('btn-start-game').addEventListener('click', () => {
@@ -294,6 +298,7 @@
 
     // Carga de preguntas desde preguntas.json y Motor del Juego
     let foodDatabase = [];
+    let remainingFoods = [];
     let canvas, ctx;
     let score = 0;
     let lives = 3;
@@ -311,8 +316,8 @@
       } catch (error) {
         console.error("Error al cargar preguntas.json, cargando datos de respaldo", error);
         foodDatabase = [
-          { name: "Pechuga de Pollo", icono: "🍗", calorias: "~110 kcal", es_bueno: true, motivo: "Proteína magra excelente para déficit calórico." },
-          { name: "Bollería Industrial", icono: "🍩", calorias: "~450 kcal", es_bueno: false, motivo: "Grasas trans y azúcares en exceso." }
+          { nombre: "Pechuga de Pollo", icono: "🍗", calorias: "~110 kcal", es_bueno: true, motivo: "Proteína magra excelente para déficit calórico." },
+          { nombre: "Bollería Industrial", icono: "🍩", calorias: "~450 kcal", es_bueno: false, motivo: "Grasas trans y azúcares en exceso." }
         ];
       }
       initGame();
@@ -329,6 +334,7 @@
       lives = 3;
       isPaused = false;
       fallingItems = [];
+      remainingFoods = [...foodDatabase]; // Clonamos la base de datos completa para ir tachando los cogidos
       updateScoreboard();
 
       basket.x = canvas.width / 2 - basket.width / 2;
@@ -358,7 +364,6 @@
         if (['ArrowLeft', 'ArrowRight', 'a', 'd'].includes(e.key)) basket.dx = 0;
       });
 
-      // WAP / Touch controls
       const btnLeft = document.getElementById('btn-left');
       const btnRight = document.getElementById('btn-right');
 
@@ -378,13 +383,17 @@
     }
 
     function spawnFood() {
-      if (!foodDatabase.length) return;
-      const randomFood = foodDatabase[Math.floor(Math.random() * foodDatabase.length)];
+      if (!remainingFoods.length) return; // Si ya no quedan alimentos por atrapar, no generamos más
+      
+      // Seleccionamos un alimento aleatorio de los que aún no se han cogido
+      const randomIndex = Math.floor(Math.random() * remainingFoods.length);
+      const foodToSpawn = remainingFoods[randomIndex];
+
       fallingItems.push({
-        ...randomFood,
-        x: Math.random() * (canvas.width - 40) + 10,
+        ...foodToSpawn,
+        x: Math.random() * (canvas.width - 40) + 20,
         y: -30,
-        speed: 2 + Math.random() * 2,
+        speed: 1.0 + Math.random() * 0.8, // Velocidad de caída reducida y suave
         size: 32
       });
     }
@@ -397,7 +406,7 @@
       if (basket.x + basket.width > canvas.width) basket.x = canvas.width - basket.width;
 
       spawnTimer++;
-      if (spawnTimer > 75) {
+      if (spawnTimer > 90) { // Intervalo de aparición pausado
         spawnFood();
         spawnTimer = 0;
       }
@@ -413,6 +422,12 @@
           item.x + item.size / 2 >= basket.x &&
           item.x - item.size / 2 <= basket.x + basket.width
         ) {
+          // Quitamos este alimento de la lista de pendientes para que no vuelva a caer
+          const indexInRemaining = remainingFoods.findIndex(f => f.nombre === item.nombre);
+          if (indexInRemaining !== -1) {
+            remainingFoods.splice(indexInRemaining, 1);
+          }
+
           showNutritionalPopup(item);
           fallingItems.splice(i, 1);
           continue;
@@ -482,17 +497,25 @@
 
       updateScoreboard();
       modal.classList.remove('hidden');
-
-      if (lives <= 0) {
-        setTimeout(gameOver, 300);
-      }
     }
 
     function resumeGame() {
       modal.classList.add('hidden');
-      if (lives > 0) {
-        isPaused = false;
+
+      if (lives <= 0) {
+        alert(`¡TE HAS QUEDADO SIN SALUD!\nPuntuación final: ${score} puntos.`);
+        initGame();
+        return;
       }
+
+      // Verificamos si ya se han cogido todos los alimentos del listado
+      if (remainingFoods.length === 0) {
+        alert(`¡ENHORABUENA!\nHas completado con éxito la compra de la Dieta Hipocalórica.\nPuntuación final: ${score} puntos.`);
+        location.reload(); // Reinicia la app a la portada
+        return;
+      }
+
+      isPaused = false;
     }
 
     document.getElementById('btn-close-x').addEventListener('click', resumeGame);
@@ -500,12 +523,8 @@
 
     function updateScoreboard() {
       document.getElementById('score-display').textContent = score;
+      document.getElementById('remaining-display').textContent = remainingFoods.length;
       document.getElementById('lives-display').textContent = '❤️'.repeat(Math.max(0, lives));
-    }
-
-    function gameOver() {
-      alert(`¡FIN DEL JUEGO!\nPuntuación final: ${score} puntos.\n¡Revisa los motivos de cada alimento para dominar la Dieta Hipocalórica!`);
-      initGame();
     }
   </script>
 </body>
